@@ -11,6 +11,6 @@ class bootstrap extends Phaser.Scene {
   }
 
   create () {
-    game.scene.start('preload');
+    this.scene.start('preload');
   }
 }

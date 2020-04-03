@@ -1,7 +1,7 @@
 var globalConfig = {
   w:800,
   h:600,
-  mode: Phaser.AUTO,
+  mode: Phaser.CANVAS,
   scaleMode: Phaser.Scale.FIT,
   splash: { //The "Loading" page for your game
     loadingScreen: "assets/gui/splash.png", //splash background
