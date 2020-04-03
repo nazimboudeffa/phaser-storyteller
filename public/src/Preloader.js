@@ -21,35 +21,8 @@ var Preloader = new Phaser.Class({
 		});
 	},
 
-	setPreloadSprite: function (sprite)
-	{
-		this.preloadSprite = { sprite: sprite, width: sprite.width, height: sprite.height };
-
-		//sprite.crop(this.preloadSprite.rect);
-		sprite.visible = true;
-		// set callback for loading progress updates
-		this.load.on('progress', this.onProgress, this );
-		this.load.on('fileprogress', this.onFileProgress, this );
-	},
-
 	onProgress: function (value) {
-
-		if (this.preloadSprite)
-		{
-			// calculate width based on value=0.0 .. 1.0
-			var w = Math.floor(this.preloadSprite.width * value);
-			console.log('onProgress: value=' + value + " w=" + w);
-
-			// sprite.frame.width cannot be zero
-			//w = (w <= 0 ? 1 : w);
-
-			// set width of sprite
-			this.preloadSprite.sprite.frame.width    = (w <= 0 ? 1 : w);
-			this.preloadSprite.sprite.frame.cutWidth = w;
-
-			// update screen
-			this.preloadSprite.sprite.frame.updateUVs();
-		}
+    this.loadingbar_fill.setCrop(0, 0, Math.max(1, value * 412), 93);
 	},
 
 	onFileProgress: function (file) {
@@ -58,21 +31,24 @@ var Preloader = new Phaser.Class({
 
 	preload: function ()
 	{
+    // setup the loading bar
+    // note: images are available during preload because of the pack-property in the constructor
+    this.loadingbar_bg   = this.add.sprite(0, 0, "loadingbar_bg").setOrigin(0, 0);
+    this.loadingbar_fill = this.add.sprite(111, 462, "loadingbar_fill").setOrigin(0, 0);
+    this.load.on('progress', this.onProgress, this );
+    this.load.on('fileprogress', this.onFileProgress, this );
+
     this.load.script('esprima',  'libs/esprima.js');
     this.load.script('yaml',  'libs/js-yaml.min.js');
     this.load.script('underscore',  'libs/underscore-min.js');
 
     loadStyle(preparePath(globalConfig.fonts));
+
     this.load.text("guiConfig", preparePath(globalConfig.guiConfig));
     this.load.text("storySetup", preparePath(globalConfig.storySetup));
     for (var i = globalConfig.storyText.length - 1; i >= 0; i--) {
       this.load.text("story"+i, preparePath(globalConfig.storyText[i]));
     };
-		// setup the loading bar
-		// note: images are available during preload because of the pack-property in the constructor
-		this.loadingbar_bg   = this.add.sprite(0, 0, "loadingbar_bg").setOrigin(0, 0);
-		this.loadingbar_fill = this.add.sprite(111, 462, "loadingbar_fill").setOrigin(0, 0);
-		this.setPreloadSprite(this.loadingbar_fill);
 	},
 
 	create: function ()
