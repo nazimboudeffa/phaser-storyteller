@@ -35,9 +35,9 @@ class preload extends Phaser.Scene {
     //preload the fonts by adding text, else they wont be fully loaded :\
     _.each(RenJS.gui.elements.assets.fonts,function(font){
         // console.log("loading" + font)
-        that.add.text(20, 20, font, {font: '42px '+font});
+        that.add.text(20, 20, font, {font: '42px '+ font});
     });
     //start preloading story
-    //this.scene.start('preloadStory');
+    this.scene.start('preloadstory');
   }
 }
