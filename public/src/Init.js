@@ -12,11 +12,6 @@ var Init = new Phaser.Class({
   },
 
   create: function (){
-    RenJS.storyManager.setupStory();
-    RenJS.gui.init();
-    RenJS.initInput();
-    RenJS.audioManager.init(function(){
-        RenJS.gui.showMenu("main");
-    });
+
   }
 });

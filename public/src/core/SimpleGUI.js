@@ -45,9 +45,11 @@ function SimpleGUI(meta){
     }
 
     this.initHUD = function(){
+        /*
         this.hud = {
-            group: game.add.group()
+            group: game.group.add()
         };
+        */
         // this.hud.group.alpha = 0;
         this.hud.area = [];
         _.each(this.elements.hud.area,function(area){
@@ -57,7 +59,7 @@ function SimpleGUI(meta){
             var y = parseInt(a[1]);
             var w = parseInt(a[2])-x;
             var h = parseInt(a[3])-y;
-            this.hud.area.push(new Phaser.Rectangle(x,y,w,h));
+            this.hud.area.push(new Phaser.Geom.Rectangle(x,y,w,h));
         },this);
         this.hud.group.visible = false;
         var messageBox = this.elements.hud.message;

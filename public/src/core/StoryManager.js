@@ -1,21 +1,19 @@
 function StoryManager(){
-
     this.actorsIndex = {};
-
-    this.setupStory = function(){        
+    this.setupStory = function(){
         //load backgrounds
-        this.backgroundSprites = game.add.group();
+        //this.backgroundSprites = game.group.add();
         _.each(RenJS.setup.backgrounds,function(filename,background){
             RenJS.bgManager.add(background,background);
         });
         //load characters
-        this.behindCharactersSprites = game.add.group();
-        this.characterSprites = game.add.group();
+        //this.behindCharactersSprites = game.add.group();
+        //this.characterSprites = game.add.group();
         _.each(RenJS.setup.characters,function(character,name){
             var displayName = character.displayName ? character.displayName : name;
             RenJS.chManager.add(name,displayName,character.speechColour,character.looks);
         });
-        this.cgsSprites = game.add.group();
+        //this.cgsSprites = game.add.group();
     }
 
     this.startScene = function(name){
@@ -26,7 +24,7 @@ function StoryManager(){
         RenJS.cgsManager.hideAll();
         // RenJS.audioManager.stop();
         this.currentScene = _.clone(RenJS.story[name]);
-        
+
     }
 
     this.getActorType = function(actor){
@@ -77,17 +75,17 @@ function StoryManager(){
             } else {
                 mainAction = keyParams[0];
                 actor = keyParams[1];
-            }            
+            }
             var actorType = RenJS.storyManager.getActorType(actor);
             //parse WITH and AT
             var params = action[key];
             if (_.contains(actionParams.withTransition,mainAction)){
                 var str = params ? params.split(" ") : [];
                 if (str.indexOf("WITH")!=-1){
-                    action.transitionName = str[str.indexOf("WITH")+1];                    
+                    action.transitionName = str[str.indexOf("WITH")+1];
                 } else {
                     action.transitionName = config.transitions[actorType];
-                }                
+                }
                 action.transition = RenJS.transitions[action.transitionName];
             }
             if (params && _.contains(actionParams.withPosition,mainAction)){
@@ -111,20 +109,20 @@ function StoryManager(){
                 contAfterTrans = str.indexOf("CONTINUE")!=-1
             }
             action.manager = RenJS[actorType+"Manager"];
-            RenJS.control.action = mainAction; 
-            RenJS.control.wholeAction = params; 
-            RenJS.control.nextAction = null; 
+            RenJS.control.action = mainAction;
+            RenJS.control.wholeAction = params;
+            RenJS.control.nextAction = null;
             console.log("Doing "+RenJS.control.action);
             switch(RenJS.control.action){
                 // Asnyc actions, will resolve after some actions
-                case "show" :         
-                    var transitioning = action.manager.show(actor,action.transition,action);                    
+                case "show" :
+                    var transitioning = action.manager.show(actor,action.transition,action);
                     if (!contAfterTrans) return transitioning.then(RenJS.resolve);
                     break;
-                case "hide" : 
+                case "hide" :
                     if (actor == "CHARS"){
                         return RenJS.chManager.hideAll(action.transition).then(RenJS.resolve);
-                    } 
+                    }
                     if (actor == "ALL"){
                         var promises = [RenJS.bgManager.hide(),RenJS.chManager.hideAll(action.transition),RenJS.cgsManager.hideAll()];
                         return Promise.all(promises).then(RenJS.resolve);
@@ -140,13 +138,13 @@ function StoryManager(){
                     var transitioning = RenJS.effects[actor](action);
                     if (!contAfterTrans) return transitioning.then(RenJS.resolve);
                     break;
-                case "say" : 
+                case "say" :
                     var look = (keyParams.length > 2) ? keyParams[2] : null;
                     return RenJS.textManager.say(actor,look,params).then(RenJS.resolve);
                 case "text" :
                     return RenJS.textManager.show(params).then(RenJS.resolve);
                 // Wait for user action input, will resolve on its own
-                case "wait" : 
+                case "wait" :
                     if (params == "click"){
                         RenJS.waitForClick();
                     } else {
@@ -155,15 +153,15 @@ function StoryManager(){
                     return;
                 case "call" :
                     return RenJS.customContent[actor](params);
-                case "choice" : 
+                case "choice" :
                     RenJS.control.skipping = false;
                     return RenJS.logicManager.showChoices(_.clone(params));
                 case "visualchoice" :
                     RenJS.control.skipping = false;
                     return RenJS.logicManager.showVisualChoices(_.clone(params));
-                
+
                 // Synch actions, will resolve after case
-                case "interrupt" : 
+                case "interrupt" :
                     RenJS.logicManager.interrupt(actor,_.clone(params));
                     break;
                 case "var" :
@@ -200,11 +198,11 @@ function StoryManager(){
                 case "scene" :
                     RenJS.storyManager.startScene(params);
                     break;
-                
+
             }
             // Resolve synch actions
             RenJS.resolve();
-        }); 
+        });
     }
 
     this.interpret = function() {
@@ -228,8 +226,8 @@ function StoryManager(){
                 }).then(function(){
                     resolve();
                 });
-            };         
-        }); 
+            };
+        });
     }
 
 }

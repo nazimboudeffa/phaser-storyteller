@@ -53,10 +53,15 @@ var Preloader = new Phaser.Class({
 
 	create: function ()
 	{
+		var that = this;
+
 		console.log('Preloader scene is ready, now start the actual game and never return to this scene');
 
     RenJS.setup = jsyaml.load(this.cache.text.get("storySetup"));
-    var that = this;
+		RenJS.storyManager.backgroundSprites = this.add.group();
+		RenJS.storyManager.behindCharactersSprites = this.add.group();
+		RenJS.storyManager.characterSprites = this.add.group();
+		RenJS.storyManager.cgsSprites = this.add.group();
     //load the story text
     var story = {};
     _.each(globalConfig.storyText,function (file,index) {
@@ -67,11 +72,21 @@ var Preloader = new Phaser.Class({
     //load and create the GUI
     var gui = jsyaml.load(this.cache.text.get("guiConfig"));
     RenJS.gui = new SimpleGUI(gui);
+		RenJS.gui.hud = {
+				group: this.add.group()
+		};
     //preload the fonts by adding text, else they wont be fully loaded :\
     _.each(RenJS.gui.elements.assets.fonts,function(font){
         // console.log("loading" + font)
         that.add.text(20, 20, font, {font: '42px '+ font});
     });
+
+		RenJS.storyManager.setupStory();
+		RenJS.gui.init();
+		RenJS.initInput();
+		RenJS.audioManager.init(function(){
+				RenJS.gui.showMenu("main");
+		});
 
 		// start actual game
 		this.scene.start('init');
