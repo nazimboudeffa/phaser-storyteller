@@ -1,4 +1,3 @@
-
 var RenJS = {
     pause: function(){
         RenJS.control.paused = true;
@@ -221,6 +220,8 @@ var RenJS = {
     }
 };
 
+//var config = _.clone(defaults);
+
 //control variables
 RenJS.control = {
     execStack:[{c:-1}],
@@ -251,13 +252,3 @@ RenJS.onInterpretActions = {
         }
     }
 }
-//init managers
-
-RenJS.bgManager = new BackgroundManager();
-RenJS.chManager = new CharactersManager();
-RenJS.audioManager = new AudioManager();
-RenJS.cgsManager = new CGSManager();
-RenJS.textManager = new TextManager();
-RenJS.tweenManager = new TweenManager();
-RenJS.logicManager = new LogicManager();
-RenJS.storyManager = new StoryManager();

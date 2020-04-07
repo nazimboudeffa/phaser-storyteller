@@ -1,4 +1,4 @@
-function SimpleGUI(meta){
+function SimpleGUI(meta, game){
     this.elements = meta ;
 
     this.getAssets = function(){
@@ -45,11 +45,9 @@ function SimpleGUI(meta){
     }
 
     this.initHUD = function(){
-        /*
         this.hud = {
-            group: game.group.add()
+            group: game.add.group()
         };
-        */
         // this.hud.group.alpha = 0;
         this.hud.area = [];
         _.each(this.elements.hud.area,function(area){

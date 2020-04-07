@@ -9,7 +9,7 @@ function Character(name,speechColour){
 
     this.addLook = function(lookName,image){
         var look = RenJS.storyManager.characterSprites.create(defaults.positions.CENTER.x,defaults.positions.CENTER.y,(image ? image : lookName));
-        look.setOrigin(0.5,1);
+        look.setOrigin(0,0);
         look.alpha = 0;
         look.name = lookName;
         this.looks[lookName] = look;

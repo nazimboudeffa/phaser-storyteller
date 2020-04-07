@@ -1,7 +1,7 @@
 var defaults = {
     //name of the game
     name: "RenJS-GAME",
-
+    
     defaultTextStyle: {
         font: "bold 16pt Arial",
         fill: "#FFFFFF",

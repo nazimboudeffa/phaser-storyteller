@@ -53,32 +53,39 @@ var Preloader = new Phaser.Class({
 
 	create: function ()
 	{
-		var that = this;
+		var game = this;
 
 		console.log('Preloader scene is ready, now start the actual game and never return to this scene');
 
-    RenJS.setup = jsyaml.load(this.cache.text.get("storySetup"));
-		RenJS.storyManager.backgroundSprites = this.add.group();
-		RenJS.storyManager.behindCharactersSprites = this.add.group();
-		RenJS.storyManager.characterSprites = this.add.group();
-		RenJS.storyManager.cgsSprites = this.add.group();
+		//init managers
+
+		RenJS.bgManager = new BackgroundManager(game);
+		RenJS.chManager = new CharactersManager(game);
+		RenJS.audioManager = new AudioManager(game);
+		RenJS.cgsManager = new CGSManager(game);
+		RenJS.textManager = new TextManager(game);
+		RenJS.tweenManager = new TweenManager(game);
+		RenJS.logicManager = new LogicManager(game);
+		RenJS.storyManager = new StoryManager(game);
+
+		RenJS.setup = jsyaml.load(this.cache.text.get("storySetup"));
+
     //load the story text
     var story = {};
     _.each(globalConfig.storyText,function (file,index) {
-        var text = jsyaml.load(that.cache.text.get("story"+index));
+        var text = jsyaml.load(game.cache.text.get("story"+index));
         story = _.extend(story,text);
     });
     RenJS.story = story;
+
     //load and create the GUI
     var gui = jsyaml.load(this.cache.text.get("guiConfig"));
-    RenJS.gui = new SimpleGUI(gui);
-		RenJS.gui.hud = {
-				group: this.add.group()
-		};
+    RenJS.gui = new SimpleGUI(gui, game);
+
     //preload the fonts by adding text, else they wont be fully loaded :\
     _.each(RenJS.gui.elements.assets.fonts,function(font){
         // console.log("loading" + font)
-        that.add.text(20, 20, font, {font: '42px '+ font});
+        game.add.text(20, 20, font, {font: '42px '+ font});
     });
 
 		RenJS.storyManager.setupStory();

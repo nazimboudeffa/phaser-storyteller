@@ -1,19 +1,21 @@
-function StoryManager(){
+function StoryManager(game){
+
     this.actorsIndex = {};
+
     this.setupStory = function(){
         //load backgrounds
-        //this.backgroundSprites = game.group.add();
+        this.backgroundSprites = game.add.group();
         _.each(RenJS.setup.backgrounds,function(filename,background){
             RenJS.bgManager.add(background,background);
         });
         //load characters
-        //this.behindCharactersSprites = game.add.group();
-        //this.characterSprites = game.add.group();
+        this.behindCharactersSprites = game.add.group();
+        this.characterSprites = game.add.group();
         _.each(RenJS.setup.characters,function(character,name){
             var displayName = character.displayName ? character.displayName : name;
             RenJS.chManager.add(name,displayName,character.speechColour,character.looks);
         });
-        //this.cgsSprites = game.add.group();
+        this.cgsSprites = game.add.group();
     }
 
     this.startScene = function(name){
