@@ -1,5 +1,5 @@
 {
-  "name": "Phaser storyteller",
+  "name": "phaser3-storyteller",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,17 +8,16 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nazimboudeffa/phaser-storyteller.git"
+    "url": "git+https://github.com/nazimboudeffa/phaser3-storyteller.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nazimboudeffa/phaser-storyteller/issues"
+    "url": "https://github.com/nazimboudeffa/phaser3-storyteller/issues"
   },
-  "homepage": "https://github.com/nazimboudeffa/phaser-storyteller#readme"
+  "homepage": "https://github.com/nazimboudeffa/phaser3-storyteller#readme"
 }
