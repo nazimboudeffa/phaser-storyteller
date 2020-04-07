@@ -194,7 +194,7 @@ var RenJS = {
 
     initInput: function () {
         // adds the control input
-        game.input.onTap.add(this.onTap, this);
+        //game.input.onTap.add(this.onTap, this);
     },
 
     lockClick: function(){

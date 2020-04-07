@@ -78,20 +78,20 @@ function SimpleGUI(meta, game){
         // };
         // console.log(messageBox);
         this.hud.text = game.add.text(messageBox.textPosition.x,messageBox.textPosition.y, "", style,this.hud.group);
-        this.hud.messageBox.addChild(this.hud.text);
+        //this.hud.messageBox.addChild(this.hud.text);
 
         if (this.elements.hud.name){
             var name = this.elements.hud.name;
             this.hud.nameBox = game.add.image(name.position.x,name.position.y,"nameBox",0,this.hud.group);
-            this.hud.messageBox.addChild(this.hud.nameBox);
+            //this.hud.messageBox.addChild(this.hud.nameBox);
             var nameStyle = this.getTextStyle(name.textStyle);
             this.hud.name = game.add.text(0,0, "", nameStyle,this.hud.group);
             if (name.textBounds){
                 this.hud.name.setTextBounds(name.textBounds.x, name.textBounds.y, name.textBounds.w, name.textBounds.h);
             } else {
-                this.hud.name.setTextBounds(0,0, this.hud.nameBox.width, this.hud.nameBox.height);
+                //this.hud.name.setTextBounds(0,0, this.hud.nameBox.width, this.hud.nameBox.height);
             }
-            this.hud.nameBox.addChild(this.hud.name);
+            //this.hud.nameBox.addChild(this.hud.name);
         }
         if (this.elements.hud.ctc) {
             var ctc = this.elements.hud.ctc;
@@ -101,7 +101,7 @@ function SimpleGUI(meta, game){
                 this.hud.ctc.animations.add('click');
 
             }
-            this.hud.messageBox.addChild(this.hud.ctc);
+            //this.hud.messageBox.addChild(this.hud.ctc);
         }
         this.HUDButtons = this.initButtons(this.elements.hud.buttons,this.hud.group);
     }
@@ -115,8 +115,7 @@ function SimpleGUI(meta, game){
             if (!btn.frames){
                 btn.frames = [0,1,0,1];
             }
-            buttons[action] = game.add.button(btn.position.x,btn.position.y,btn.sprite,this.buttonActions[action],
-                this,btn.frames[0],btn.frames[1],btn.frames[2],btn.frames[3],group);
+            //buttons[action] = game.add.button(btn.position.x,btn.position.y,btn.sprite,this.buttonActions[action],this,btn.frames[0],btn.frames[1],btn.frames[2],btn.frames[3],group);
         },this);
         return buttons;
     }
@@ -129,11 +128,11 @@ function SimpleGUI(meta, game){
         this.menus[name].group.visible = false;
 
         this.menus[name].background = game.add.image(0,0,name+"Background",0,this.menus[name].group);
-        if (menu.music && !config.settings.muted){
-            this.menus[name].music = game.add.audio(menu.music);
-            this.menus[name].music.onDecoded.add(function(){
-                this.menus[name].music.ready = true;
-            }, this);
+        if (menu.music && !defaults.settings.muted){
+            //this.menus[name].music = game.add.audio(menu.music);
+            //this.menus[name].music.onDecoded.add(function(){
+            //    this.menus[name].music.ready = true;
+            //}, this);
         };
         this.menus[name].buttons = this.initButtons(menu.buttons,this.menus[name].group);
         this.initSliders(menu.sliders,this.menus[name].group);
@@ -143,23 +142,23 @@ function SimpleGUI(meta, game){
     this.initSliders = function(slidersMeta,group){
         _.each(slidersMeta,function(slider,prop){
             var sliderFull = game.add.image(slider.position.x,slider.position.y,slider.sprite,0,group);
-            var sliderMask = game.add.graphics(slider.position.x,slider.position.y,group);
-            sliderMask.beginFill(0xffffff);
+            //var sliderMask = game.add.graphics(slider.position.x,slider.position.y,group);
+            //sliderMask.beginFill(0xffffff);
 
-            var currentVal = config.settings[prop];
-            var limits = config.limits[prop];
+            var currentVal = defaults.settings[prop];
+            var limits = defaults.limits[prop];
             var maskWidth = sliderFull.width*(currentVal-limits[0])/(limits[1]-limits[0]);
-            sliderMask.drawRect(0,0,maskWidth,sliderFull.height);
-            sliderFull.mask = sliderMask;
-            sliderFull.inputEnabled=true;
-            sliderFull.limits = limits;
-            sliderFull.prop = prop;
-            sliderFull.events.onInputDown.add(function(sprite,pointer){
-                var val = (pointer.x-sprite.x);
-                sprite.mask.width = val;
-                var newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
-                this.sliderValueChanged[sprite.prop](newVal);
-            }, this);
+            //sliderMask.drawRect(0,0,maskWidth,sliderFull.height);
+            //sliderFull.mask = sliderMask;
+            //sliderFull.inputEnabled=true;
+            //sliderFull.limits = limits;
+            //sliderFull.prop = prop;
+            //sliderFull.events.onInputDown.add(function(sprite,pointer){
+            //    var val = (pointer.x-sprite.x);
+            //    sprite.mask.width = val;
+            //    var newVal = (val/sprite.width)*(sprite.limits[1] - sprite.limits[0])+sprite.limits[0];
+            //    this.sliderValueChanged[sprite.prop](newVal);
+            //}, this);
         },this);
     }
 

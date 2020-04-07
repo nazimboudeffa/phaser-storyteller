@@ -1,4 +1,4 @@
-function AudioManager(){
+function AudioManager(game){
     this.musicList = {};
     this.sfx = {};
 
@@ -10,19 +10,19 @@ function AudioManager(){
         bgs : null
     }
 
-    this.isMusic = function(actor){    
+    this.isMusic = function(actor){
         return _.has(this.musicList,actor);
     }
 
-    this.isSfx = function(actor){    
+    this.isSfx = function(actor){
         return _.has(this.sfx,actor);
     }
 
     this.init = function(callback){
         var audioList = [];
         _.each(RenJS.setup.music,function(filename,key){
-            this.musicList[key] = game.add.audio(key);
-            audioList.push(this.musicList[key]);
+            //this.musicList[key] = game.add.audio(key);
+            //audioList.push(this.musicList[key]);
             // music.onDecoded.add(function(){
             //     console.log("adding music");
             //     console.log(key);
@@ -30,16 +30,16 @@ function AudioManager(){
             //     this.musicList[key] = music;
             // }, this);
         },this);
-        
+
         _.each(RenJS.setup.sfx,function(filename,key){
-            this.sfx[key] = game.add.audio(key);            
-            audioList.push(this.sfx[key]);
+            //this.sfx[key] = game.add.audio(key);
+            //audioList.push(this.sfx[key]);
         },this);
-        game.sound.setDecodedCallback(audioList, function(){
-            console.log("Audio loaded");
-            this.audioLoaded = true;
-            callback();
-        }, this);
+        //game.sound.setDecodedCallback(audioList, function(){
+        //    console.log("Audio loaded");
+        //    this.audioLoaded = true;
+        //    callback();
+        //}, this);
     }
 
     this.mute = function(){
@@ -59,7 +59,7 @@ function AudioManager(){
             }
         }
         config.settings.muted = !config.settings.muted;
-        
+
         // RenJS.resolve();
     }
 
@@ -98,7 +98,7 @@ function AudioManager(){
                 this.musicList[key].play("",0,1,looped);
             }
         }
-        
+
     }
 
     this.stopAll = function(){
@@ -125,14 +125,13 @@ function AudioManager(){
         if (this.audioLoaded && !config.settings.muted){
             // debugger;
             this.sfx[key].volume = config.settings.sfxv;
-            this.sfx[key].play();    
+            this.sfx[key].play();
 
         }
-        
+
         // var fx = game.add.audio(key);
         // fx.onStop.add(function(){
         //     RenJS.resolve();
         // });
     }
 }
-
