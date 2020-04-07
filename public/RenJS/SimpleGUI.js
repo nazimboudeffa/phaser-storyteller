@@ -76,13 +76,13 @@ function SimpleGUI(meta, game){
         // textStyle.wordWrap = true;
 
         // };
-        // console.log(messageBox);
+        console.log(messageBox);
         this.hud.text = game.add.text(messageBox.textPosition.x,messageBox.textPosition.y, "", style,this.hud.group);
         //this.hud.messageBox.addChild(this.hud.text);
 
         if (this.elements.hud.name){
             var name = this.elements.hud.name;
-            this.hud.nameBox = game.add.image(name.position.x,name.position.y,"nameBox",0,this.hud.group);
+            this.hud.nameBox = game.add.image(name.position.x,name.position.y,"nameBox",0,this.hud.group).setOrigin(0,0);
             //this.hud.messageBox.addChild(this.hud.nameBox);
             var nameStyle = this.getTextStyle(name.textStyle);
             this.hud.name = game.add.text(0,0, "", nameStyle,this.hud.group);
